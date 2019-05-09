@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        String a = scanner.next();
+        String b = scanner.next();
+        String c = scanner.next();
+        String d = scanner.next();
+        String e = scanner.next();
+
+        if (b.equals("+") && a.equals("x")) {
+            System.out.println(Integer.parseInt(e) - Integer.parseInt(c));
+        } else if (b.equals("+") && c.equals("x")) {
+            System.out.println(Integer.parseInt(e) - Integer.parseInt(a));
+        } else if (b.equals("-") && a.equals("x")) {
+            System.out.println(Integer.parseInt(e) + Integer.parseInt(c));
+        } else if (b.equals("-") && c.equals("x")) {
+            System.out.println(Integer.parseInt(a) - Integer.parseInt(e));
+        } else if (d.equals("+") && c.equals("x")) {
+            System.out.println(Integer.parseInt(a) - Integer.parseInt(e));
+        } else if (d.equals("+") && e.equals("x")) {
+            System.out.println(Integer.parseInt(a) - Integer.parseInt(c));
+        } else if (d.equals("-") && c.equals("x")) {
+            System.out.println(Integer.parseInt(a) + Integer.parseInt(e));
+        } else if (d.equals("-") && e.equals("x")) {
+            System.out.println(Integer.parseInt(c) - Integer.parseInt(a));
+        } else if (b.equals("+") && e.equals("x")) {
+            System.out.println(Integer.parseInt(c) + Integer.parseInt(a));
+        } else if (d.equals("+") && a.equals("x")) {
+            System.out.println(Integer.parseInt(c) + Integer.parseInt(e));
+        } else if (b.equals("-") && e.equals("x")) {
+            System.out.println(Integer.parseInt(a) - Integer.parseInt(c));
+        } else if (d.equals("-") && a.equals("x")) {
+            System.out.println(Integer.parseInt(c) - Integer.parseInt(e));
+        }
+    }
+}
