@@ -1,0 +1,65 @@
+import java.util.*;
+
+public class Main {
+    public static int operation(int n1, int n2, String str)
+    {
+        if ("+".equals(str))
+            return n1+n2;
+        else if ("-".equals(str))
+            return n1-n2;
+        
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        // write your code here
+        Scanner sc = new Scanner(System.in);
+        
+        Vector<Integer> num = new Vector<>(3);
+        Vector<String> op = new Vector<>(2);
+        int res = 0;
+
+        while (sc.hasNext())
+        {
+            String temp = ""; 
+
+            try
+            {
+                temp = sc.next();
+                num.add(Integer.parseInt(temp));
+                
+            }
+            catch (NumberFormatException nfe)
+            {
+                if ("x".equals(temp))
+                    num.add(0);
+                else   
+                    op.add(temp);
+            }  
+        }
+        
+        int ei = op.indexOf("=");
+        
+        if (ei == 0) 
+        {
+            num.add(num.get(0)); num.removeElementAt(0);
+            op.add("="); op.removeElementAt(0);
+        }
+
+        ei = op.indexOf("="); 
+        int ni = num.indexOf(0);
+
+        if (ni == 2 && ei == 1)
+            res = operation(num.get(0), num.get(1), op.get(0));
+        else
+        {
+            res = operation(num.get(0), num.get(1), op.get(0));
+            res = num.get(2) - res;
+        }
+
+        if ("-".equals(op.get(0)) && (ni == 1))
+            res = -res;
+
+        System.out.println(res);
+    }
+}
