@@ -1,0 +1,36 @@
+import java.util.*;
+//import java.lang.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        int rot = sc.nextInt();
+
+        if (rot == 0)
+        {
+            System.out.println(str);
+            return;
+        }
+        
+        Vector<Integer> num = new Vector<>();
+
+        StringTokenizer st = new StringTokenizer(str);
+        while (st.hasMoreTokens())
+            num.add(Integer.parseInt(st.nextToken()));
+            
+        int size = num.size();    
+        str = str + " ";
+        int len = str.length();
+        rot = rot % size;
+        
+        for (int i = 0; i < rot; i++)
+        {
+            str = num.get(size - 1 - i) + " " + str;
+        }
+        
+        str = str.substring(0, len);
+        System.out.print(str);
+    }
+}
