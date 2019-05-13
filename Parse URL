@@ -1,0 +1,69 @@
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+
+        int pos = str.indexOf("?");
+        int len = str.length();
+ 
+        str = str.substring(pos + 1, len);
+        String[] inff = str.split("&");
+        int sizesplit = inff.length;
+        
+        Map<String, String> vc = new LinkedHashMap<>();
+        //boolean wrong = false;
+        
+        for (int i = 0; i < sizesplit; i++)
+        {
+            String part = inff[i];
+            int posEq = part.indexOf("=");
+            
+            String label = part.substring(0, posEq);
+            String value = part.substring(posEq + 1, part.length());
+            
+            if (value == null || value.isEmpty())
+            {
+                /*if ("pass".equals(label))
+                {
+                    wrong = true;
+                    value = "not found";
+                }
+                else if (wrong)
+                {
+                    value = ""; 
+                }
+                else*/
+                {
+                    value = "not found";
+                }
+            }
+            /*else if (wrong)
+                value = ""; */
+            
+            //System.out.println("l " + label + " v " + value);
+            vc.put(label, value);
+        }
+        
+        //System.out.println(vc.toString());
+        String pwd = vc.get("pass");
+        
+        /*if (pwd == null)
+        {
+            for(Map.Entry m : vc.entrySet())  
+                System.out.println(m.getKey() + " : " + "");
+        }
+        else*/
+        //{
+            for(Map.Entry m : vc.entrySet()) 
+                System.out.println(m.getKey() + " : " + m.getValue());
+             
+            //if (!wrong)   
+            if (pwd != null)
+                System.out.println("password" + " : " + vc.get("pass"));
+        //}
+    }
+}
