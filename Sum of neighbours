@@ -1,0 +1,55 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        
+        Vector<Vector<Integer>> vc = new Vector<>();
+        
+        while (sc.hasNext())
+        {
+            String str = sc.nextLine();
+            
+            if (!"end".equals(str))
+            {
+                String[] strArr = str.split(" ");
+                int col = strArr.length;
+            
+                Vector<Integer> tmpVc = new Vector<>();
+                for (int i = 0; i < col; i++)
+                {
+                    tmpVc.add(Integer.parseInt(strArr[i]));
+                }
+                
+                vc.add(tmpVc);
+            }
+            else
+                break;
+        }
+        
+        int row = vc.size();
+        int col = vc.get(0).size();
+        int[][] arr = new int[row][col];
+        
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < col; j++)
+            {
+                int temp = 0;
+                temp += vc.get((i+1) % row).get(j);
+                temp += vc.get(i).get((j+1) % col);
+                temp += vc.get(i-1 < 0 ? i-1+row : i-1).get(j);
+                temp += vc.get(i).get(j-1 < 0 ? j-1+col : j-1);
+                arr[i][j] = temp;
+            }
+            
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < col; j++)
+            {
+                System.out.print(arr[i][j] + " ");
+                
+                if (j == col-1)
+                    System.out.println();
+            }
+    }
+}
