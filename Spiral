@@ -1,0 +1,83 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        
+        if (n == 1)
+        {
+            System.out.println(1);
+            return;
+        }
+        
+        int[][] arr = new int[n][n];
+        int k = n*n;
+        int num = 1;
+        int round = 0;
+        
+        //System.out.println("n " + n);
+        
+        while (num <= k)
+        {
+            int step = n - round - 1;
+            int r1 = round;
+            int c1 = round;
+            int r2 = n - 1 - round;
+            int c2 = n - 1 - round;
+        
+            for (int i = 0; i < step; i++)
+            {
+                if (arr[r1][c1 + i] == 0)
+                {
+                    arr[r1][c1 + i] = num;
+                    num++;
+                }
+            }
+            //System.out.println("c " + num);
+            
+            for (int i = 0; i < step; i++)
+            {
+                if (arr[r1 + i][c2] == 0)
+                {
+                    arr[r1 + i][c2] = num;
+                    num++;
+                }
+            }
+            //System.out.println("c " + num);
+            
+            for (int i = 0; i < step; i++)
+            {
+                if (arr[r2][c2 - i] == 0)
+                {
+                    arr[r2][c2 - i] = num;
+                    num++;
+                }
+            }
+            //System.out.println("c " + num);
+            
+            for (int i = 0; i < step; i++)
+            {
+                if (arr[r2 - i][c1] == 0)
+                {
+                    arr[r2 - i][c1] = num;
+                    num++;
+                }
+            }
+            
+            //System.out.println("c " + num);
+            round++;
+        }
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+            {
+                System.out.print(arr[i][j] + " ");
+                if (j == n-1)
+                {
+                    System.out.println();
+                }
+            }
+    }
+}
