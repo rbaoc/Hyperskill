@@ -1,0 +1,85 @@
+class Shape {}
+
+class Square extends Shape {
+    private int side;
+
+    public int getSide() {
+        return side;
+    }
+
+    public void setSide(int side) {
+        this.side = side;
+    }
+}
+
+class Rectangle extends Shape {
+    private int width, height;
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+}
+
+public static int sumOfAreas(Shape[] array) {
+    // write your code here
+    int area = 0;
+   
+    for (Shape sh : array)
+    {
+        Class cl = sh.getClass();
+
+        try
+        {
+            if (cl.equals(Square.class))
+            {
+                java.lang.reflect.Method[] me = cl.getMethods();
+                for (java.lang.reflect.Method m : me)
+                {
+                    if ("getSide".equals(m.getName()))
+                    {
+                        area += (int) m.invoke(sh) * (int) m.invoke(sh);
+                        break; 
+                    }
+                }
+            }
+            else if (cl.equals(Rectangle.class))
+            {
+                java.lang.reflect.Method[] me = cl.getMethods();
+                int width = 0;
+                int height = 0;
+
+                for (java.lang.reflect.Method m : me)
+                {
+                    if ("getWidth".equals(m.getName()))
+                    {
+                        width = (int) m.invoke(sh);
+                    }
+                    else if ("getHeight".equals(m.getName()))
+                    {
+                        height = (int) m.invoke(sh);
+                    } 
+                }
+
+                area += width * height;
+            }
+        }
+        catch(IllegalAccessException ex)
+        {}
+        catch(Exception ex)
+        {}
+    }
+
+    return area;
+}
