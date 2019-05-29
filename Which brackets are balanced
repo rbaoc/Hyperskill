@@ -1,0 +1,40 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        int len = str.length();
+
+        Stack<Character> st = new Stack<>();
+        List<Character> open = Arrays.asList(new Character[]{'(', '[', '{'});
+        List<Character> close = Arrays.asList(new Character[]{')', ']', '}'});
+        boolean check = true;
+
+        for (int i = 0; i < len && check; i++)
+        {
+            char tmp = str.charAt(i);
+            if (tmp == open.get(0) || tmp == open.get(1) | tmp == open.get(2))
+                    st.push(tmp);
+            else
+            {
+                if (st.empty())
+                {
+                    check = false;
+                    break;
+                }
+
+                if (st.pop() == open.get(close.indexOf(tmp)))
+                    continue;
+                else
+                {
+                    check = false;
+                    break;
+                }
+            }   
+        }
+
+        System.out.println(check && st.empty());
+    }
+}
