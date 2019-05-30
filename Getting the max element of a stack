@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        sc.nextLine();
+        
+        Stack<Integer> st = new Stack<>();
+        Stack<Integer> stmax = new Stack<>();
+        
+        for (int i = 0; i < num; i++)
+        {
+            String str = sc.nextLine();
+
+            if (str.indexOf("push") >= 0)
+            {
+                int tmp = Integer.parseInt(str.substring(5, str.length()));
+                st.push(tmp);
+
+                if (i == 0)
+                {
+                    stmax.push(tmp);
+                }
+                else
+                {
+                    stmax.push(Math.max(tmp, stmax.peek()));
+                }
+            }
+            else if (str.indexOf("pop") >= 0)
+            {
+                if (!st.empty())
+                {
+                    st.pop();
+                    stmax.pop();
+                }
+                    
+            }
+            else if (str.indexOf("max") >= 0)
+            {
+                System.out.println(stmax.peek());
+            }
+        }
+    }
+}
