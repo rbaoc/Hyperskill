@@ -1,0 +1,65 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        int small = sc.nextInt();
+
+        if (small < 1 || small > 10)
+        {
+            System.out.println("NO");
+            return; 
+        }
+            
+        boolean ch = true;
+        int big = small * small;
+        int[][] testsq = new int[big][big];
+        int[][] testi = new int[big][big];
+        int[][] testj = new int[big][big];
+
+        for (int i = 0; i < big; i++)
+        for (int j = 0; j < big; j++)
+        {
+            int temp = sc.nextInt();
+                
+            if (temp > 0 && temp <= big)
+            {
+                temp--; 
+                testi[i][temp]++;
+                testj[temp][j]++;
+                
+                int asq = i/small;  
+                int bsq = j/small;  
+                //System.out.println(i + " " + j);
+                testsq[asq * small + temp / small]      
+                        [bsq * small + temp % small]++; 
+            }
+            else
+            {
+                ch = false;
+                System.out.println("NO");
+                return;
+            }
+        }
+        
+        for (int i = 0; i < big; i++)
+        for (int j = 0; j < big; j++)
+        {
+            if (testi[i][j] == 0 || testj[i][j] == 0 || testsq[i][j] == 0)
+            {
+                ch = false;
+                System.out.println("NO");
+                return;
+                //break;
+            }
+        }
+        
+        //System.out.println(Arrays.deepToString(test));
+        //System.out.println();
+        //System.out.println(Arrays.deepToString(testsq));
+        
+        System.out.println(ch ? "YES" : "NO");
+        return;
+    }
+}
