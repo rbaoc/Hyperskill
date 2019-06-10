@@ -2,8 +2,8 @@ import java.util.*;
 
 class Node
 {
-    public Node parent;
-    public List<Node> children;
+    private Node parent;
+    private List<Node> children;
     private int value;
     private int level;
 
@@ -17,7 +17,9 @@ class Node
 
     public void add(int val, int lev)
     {
-        children.add(new Node(val, lev));
+        Node child = new Node(val, lev);
+        child.setParent(this); 
+        children.add(child);
     }
 
     public int getVal()
@@ -33,6 +35,11 @@ class Node
     public List<Node> getChildren()
     {
         return children;
+    }
+
+    public void setParent(Node node)
+    {
+        this.parent = node;
     }
 }
 
