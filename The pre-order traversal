@@ -1,0 +1,88 @@
+import java.util.*;
+
+class Node
+{
+    public Node parent;
+    public List<Node> children;
+    private int value;
+    private int level;
+
+    public Node(int value, int level)
+    {
+        this.value = value;
+        this.level = level;
+        parent = null;
+        children = new ArrayList();
+    }
+
+    public void add(int val, int lev)
+    {
+        children.add(new Node(val, lev));
+    }
+
+    public int getVal()
+    {
+        return value;
+    }
+
+    public int getLev()
+    {
+        return level;
+    }
+
+    public List<Node> getChildren()
+    {
+        return children;
+    }
+}
+
+class Main {
+    private static int height;
+    
+    public static void addNodes(Node node)
+    {
+        if (node.getLev() == height)
+            return;
+
+        int tmpVal = node.getVal() * 3;
+        int tmpLev = node.getLev();
+
+        for (int i = 1; i <= 3; i++)
+        {
+            node.add(tmpVal + i, tmpLev + 1);
+        }
+        
+        List<Node> tmpChildren = node.getChildren();
+        for (Node child : tmpChildren)
+        {
+            addNodes(child);
+        }   
+    }
+
+    public static void printNodes(Node node)
+    {
+        System.out.print(node.getVal() + " ");
+
+        List<Node> tmpChildren = node.getChildren();
+        if (!tmpChildren.isEmpty())
+        {
+            for (Node child : tmpChildren)
+            {
+                printNodes(child);
+            }
+        }
+        else
+            return;  
+    }
+
+    public static void main(String[] args) {
+        // put your code here
+        //pre = root, left, right
+        //pre = root, children(i)
+        height = new Scanner(System.in).nextInt();
+        
+        Node root = new Node(0, 0);
+        addNodes(root);
+        printNodes(root);
+    }
+}
