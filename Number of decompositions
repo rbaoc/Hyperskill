@@ -1,0 +1,103 @@
+import java.util.*;
+
+class Node {
+    private Node parent;
+    private List<Node> children;
+    int value;
+
+    public Node(int value) {
+        this.value = value;
+        parent = null;
+        children = new ArrayList();
+    }
+
+    public void add(int value) {
+        Node node = new Node(value);
+        node.setParent(this);
+        children.add(node);
+    }
+
+    public void add(Node node) {
+        node.setParent(this);
+        children.add(node);
+    }
+
+    public void setParent(Node node) {
+        this.parent = parent;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public List<Node> getChildren() {
+        return children;
+    }
+    
+    public Node get(int index) {
+        return children.get(index);
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+public class Main {
+
+    public static void deNext(Node node, int sum) {
+        if (sum == 0)
+            return;
+        
+        int val = node.getValue();
+        for (int i = 1; i <= val; i++) {
+            if (sum - i >= 0) {
+                node.add(i);
+                //System.out.println(i);
+                deNext(node.get(i-1), sum - i);
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    public static void printTree(Node node, String line) {
+        int val = node.getValue();
+        line = line + val + " ";
+
+        List<Node> printChildren = node.getChildren();
+        
+        if (printChildren.isEmpty()) {
+            System.out.println(line);
+        }
+        else {
+            for (Node printChild : printChildren) {
+                printTree(printChild, line);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // put your code here
+        int sum = new Scanner(System.in).nextInt();
+        Node root = new Node(sum);
+
+        for (int i = 0; i < sum; i++)
+        {
+            root.add(i + 1);
+        }
+
+        List<Node> children = root.getChildren();
+        for (Node node : children)
+        {
+            deNext(node, sum - node.getValue());
+        }
+        
+        String line = "";
+        for (Node node : children)
+        {
+            printTree(node, line);
+        }
+    }
+}
