@@ -1,0 +1,40 @@
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+
+        SortedMap<Integer, Integer> map = new TreeMap();
+        for (int i = 0; i < num; i++) {
+            int parent = sc.nextInt();
+            int child = sc.nextInt();
+
+            if (map.containsKey(parent)) {
+                map.put(parent, map.get(parent) + 1);
+            } else {
+                map.put(parent, 1);
+            }
+
+            if (!map.containsKey(child)) {
+                map.put(child, 0);
+            }
+        }
+
+        boolean check = true;
+        for (Map.Entry<Integer, Integer> en : map.entrySet()) {
+            int key = en.getKey();
+            int value = en.getValue();
+            
+            if (value == 0 || value == 2)
+                continue;
+            else {
+                check = false;
+                break;
+            }
+        }
+
+        System.out.println(check == true ? "yes" : "no");
+    }
+}
