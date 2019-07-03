@@ -2,6 +2,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.time.temporal.ChronoUnit;
 
 /*class Viking {
   String name;
@@ -26,7 +27,7 @@ public class Main
   {
     /*
      * Cheatsheet: how to read & write data from standard I/O
-     * java.io.BufferedReader r = new java.io.BufferedReader (new java.io.InputStreamReader (System.in));
+     * BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
      * String s;
      * s=r.readLine();
      * System.out.println(s);
@@ -69,21 +70,23 @@ public class Main
         if (num == 1) {
       		previous = enen.getKey();
           	if (fishToday > 0) 
-              longAL++;
+              longAL++; 
           	continue;
         }
         
-        if (enen.getKey().compareTo(previous) == 1 && fishToday > 0) {
+        if (ChronoUnit.DAYS.between(previous.toInstant(), enen.getKey().toInstant()) == 1 
+            && fishToday > 0) {
         	longAL++;
-          	longest = Math.max(longest, longAL);
+          	//longest = Math.max(longest, longAL);
         } else {
           	longest = Math.max(longest, longAL);
-          	longAL = 1;
+          	longAL = fishToday > 0 ? 1 : 0;
         }
-        
+       
         previous = enen.getKey();
       }
       
+      longest = Math.max(longest, longAL);
       list.add(new Pair(name, longest, (float) sum/num));
     }
     
@@ -92,15 +95,19 @@ public class Main
       public int compare(Pair p1, Pair p2) {
         if (p1.x != p2.x)
           return p2.x - p1.x;
-        else 
-          return (int) (p2.y - p1.y);
+        else if (p1.x == p2.x)
+          return (int) (100 * (p2.y - p1.y));
+        
+        return 0;
       }
     });
     
     DecimalFormat df = new DecimalFormat("#.##");
-	df.setRoundingMode(RoundingMode.CEILING);
+	df.setRoundingMode(RoundingMode.HALF_UP);
+    //float yy = (float) Math.round(pair * 100.0) / 100.0;
     for (Pair pair : list) {
-      System.out.println(pair.name + " " + pair.x + " " + df.format(pair.y));
+      System.out.println(pair.name + " " + pair.x 
+                         + " " + df.format(pair.y));
     }
   }
 }
