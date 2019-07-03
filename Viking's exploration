@@ -1,0 +1,20 @@
+A group of Vikings is exploring old dungeons. We know there are N chambers in total but we’re not sure if all of them are reachable if we set out from the first chamber. We start from chamber no 1.
+Instead of a map we have a description that looks like a code. We're interested in deciphering it and finding out if we're able to visit all the chambers.
+
+Input:
+From the first line of standard input, read single number N - total number of chambers (1<N<500).
+Then read N lines with the connection available from each chamber (the first chamber, where we start from, has the number 1).
+In every line of the input file there are one or two positive integer numbers separated by a single space denoting the indexes of chambers that are accessible from a given chamber.
+
+Output:
+The first and only line of output should show the number of chambers that are not reachable when starting from the first chamber (or print 0 if all chambers can be reached when starting from the first one).
+
+Example input
+5
+2
+3
+2 1
+1
+4
+Example output
+2
