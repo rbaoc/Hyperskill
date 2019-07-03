@@ -1,0 +1,56 @@
+import java.io.*;
+
+public class Main
+{
+  public static boolean enoughToWithdraw(float x, float y) {
+    if (x > y) {
+      System.out.printf("%.2f", y);
+      return false;
+    }
+    else
+      return true;
+  } 
+  
+  public static void main (String[] args) throws java.lang.Exception
+  {
+    /*
+     * Cheatsheet: how to read & write data from standard I/O
+     * java.io.BufferedReader r = new java.io.BufferedReader (new java.io.InputStreamReader (System.in));
+     * String s;
+     * s=r.readLine();
+     * System.out.println(s);
+     */
+    
+    BufferedReader reader = new BufferedReader (
+      new InputStreamReader(System.in)
+    );
+    
+    String[] line = reader.readLine().split(" ");
+    int x = Integer.parseInt(line[0]);		//withdraw
+    float y = Float.parseFloat(line[1]);	//balance
+    int c = Integer.parseInt(line[2]);		//5 10 20 50 100 200
+    float d = Float.parseFloat(line[3]);	//fee
+    
+    if (!enoughToWithdraw(x, y))
+      return;
+    
+    if (x % c == 0) {
+      if (!enoughToWithdraw(x + d, y))
+        return;
+      
+      y -= x + d;
+      if (x >= 100)
+        y += d;
+    } else {
+      int xx = (x/c + 1) * c;
+      if (!enoughToWithdraw(xx + d, y))
+        return;
+      
+      y -= xx + d;
+      if (xx >= 100)
+        y += d;
+    }
+    
+    System.out.printf("%.2f", y);
+  }
+}
