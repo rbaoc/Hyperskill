@@ -66,7 +66,7 @@ public class Main {
         int nodeKey = node.getKey();
         if (key == nodeKey) 
             return Integer.toString(node.getLevel());
-        else if (key < node.getKey()) 
+        else if (key < nodeKey) 
             return getLevel(node.getLeft(), key);
         else
             return getLevel(node.getRight(), key);
