@@ -1,0 +1,56 @@
+import java.util.*;
+
+class MinHeap {
+    private int[] heap;
+    private int[] times;
+    private int size;
+    private int maxsize;
+
+    public int[] getTimes() {
+        return times;
+    }
+
+    public MinHeap(int maxsize) {
+        this.size = 0;
+        this.maxsize = maxsize;
+        heap = new int[maxsize + 1];
+        times = new int[maxsize];
+        heap[0] = Integer.MIN_VALUE;
+    } 
+
+    public void swap(int pos1, int pos2) {
+        int tmp = heap[pos1];
+        heap[pos1] = heap[pos2];
+        heap[pos2] = tmp;
+        times[heap[pos1] - 1]++;
+        times[heap[pos2] - 1]++;
+    }
+
+    public void insert(int element) {
+        heap[++size] = element;
+        int current = size;
+
+        while(heap[current] < heap[current / 2]) {
+            swap(current, current / 2);
+            current = current / 2;
+        }
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        // put your code here
+        Scanner sc = new Scanner(System.in);
+        int number = sc.nextInt();
+        MinHeap minheap = new MinHeap(number);
+
+        for (int i = 0; i < number; i++) {
+            minheap.insert(sc.nextInt());
+        }
+
+        int[] times = minheap.getTimes();
+        for (int i = 0; i < number; i++) {
+            System.out.print(times[i] + " ");
+        }
+    }
+}
