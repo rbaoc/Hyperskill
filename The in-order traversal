@@ -1,0 +1,164 @@
+import java.util.*;
+
+class Node {
+    Node parent;
+    Node left;
+    Node right;
+
+    private int key;
+    private int value;
+
+    Node(Node parent, int key, int value) {
+        this.parent = parent;
+        this.left = null;
+        this.right = null;
+        this.key = key;
+        this.value = value;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public Node getLeft() {
+        return left;
+    }
+
+    public Node getRight() {
+        return right;
+    }
+    
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    public void setLeft(Node left) {
+        this.left = left;
+    }
+
+    public void setRight(Node right) {
+        this.right = right;
+    }
+}
+
+public class Main {
+    private static Node root = null;
+
+    public static Node add(Node node, Node parent, int key, int value) {
+        if (node == null) {
+            node = new Node(parent, key, value);
+        } else if (key < node.getKey())
+            node.setLeft(add(node.getLeft(), node, key, value));
+        else
+            node.setRight(add(node.getRight(), node, key, value));
+
+        return node;
+    }
+
+    public static void replace(Node remove, Node remain) {
+        if (remove.getParent() == null)
+            root = remain;
+        else if (remove.getParent().getLeft() == remove)
+            remove.getParent().setLeft(remain);
+        else    
+            remove.getParent().setRight(remain);
+
+        if (remain != null)
+            remain.setParent(remove.getParent());
+    }
+
+    public static void delete(Node node, int key) {
+        if (node == null)
+            return;
+        
+        int nodeKey = node.getKey();
+        Node left = node.getLeft();
+        Node right = node.getRight();
+
+        if (key < nodeKey)
+            delete(left, key);
+        else if (key > nodeKey)
+            delete(right, key);
+        else if (left != null && right != null) {
+            Node leftMost = right;
+            while (leftMost.getLeft() != null)
+                leftMost = leftMost.getLeft();
+
+            replace(node, leftMost);
+        } else if (left == null)
+            replace(node, right);
+        else if (right == null)
+            replace(node, left);
+        else 
+            replace(node, null);
+    }
+
+    public static Node search(Node node, int key) {
+        if (node == null)
+            return null;
+
+        int nodeKey = node.getKey();
+        if (key == nodeKey) 
+            return node;
+        else if (key < nodeKey) 
+            return search(node.getLeft(), key);
+        else
+            return search(node.getRight(), key);
+    }
+
+    public static void change(int key, int value) {
+        Node node = search(root, key);
+        node.setValue(value);
+    }
+
+    public static void printTree(Node node) {
+        if (node == null)
+            return;
+        
+        printTree(node.getLeft());
+        System.out.print(node.getValue() + " ");
+        printTree(node.getRight());
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int number = sc.nextInt(); 
+
+        for (int i = 0; i < number; i++) {
+            char cmd = sc.next().charAt(0);
+
+            if (i == 0 && cmd == '+') {
+                root = new Node(null, sc.nextInt(), sc.nextInt());
+                continue;
+            }
+
+            switch(cmd) {
+                case '+':
+                    add(root, null, sc.nextInt(), sc.nextInt());
+                    break;
+                case '-':
+                    delete(root, sc.nextInt());
+                    break;
+                case '!':
+                    change(sc.nextInt(), sc.nextInt());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        printTree(root);  
+    }
+}
